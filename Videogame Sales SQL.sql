@@ -18,7 +18,7 @@ FROM Videogame
 --Platforms & # of Games 
 
 SELECT Platform,
-	   COUNT(Name) NumGames
+       COUNT(Name) NumGames
 FROM Videogame
 	GROUP BY Platform
 	ORDER BY NumGames DESC
@@ -28,7 +28,7 @@ FROM Videogame
 --Platform with most sells (In Millions & Billions) 
 
 SELECT Platform, 
-	   ROUND(SUM(Global_Sales),2) TotalSales 
+       ROUND(SUM(Global_Sales),2) TotalSales 
 FROM Videogame 
 	GROUP BY Platform 
 	ORDER BY TotalSales DESC
@@ -38,7 +38,7 @@ FROM Videogame
 --Publisher & # of Games 
 
 SELECT Publisher,
-	   COUNT(Name) NumGames
+       COUNT(Name) NumGames
 FROM Videogame 
 	GROUP BY Publisher 
 	ORDER BY NumGames DESC
@@ -49,7 +49,7 @@ FROM Videogame
 
 
 SELECT Publisher,
-	   ROUND(SUM(Global_Sales),2) TotalSales
+       ROUND(SUM(Global_Sales),2) TotalSales
 FROM Videogame 
 	GROUP BY Publisher 
 	ORDER BY TotalSales DESC
@@ -59,7 +59,7 @@ FROM Videogame
 --Genre & # of Games 
 
 SELECT Genre,
-	   COUNT(Name) NumGames
+       COUNT(Name) NumGames
 FROM Videogame 
 	GROUP BY Genre 
 	ORDER BY NumGames DESC
@@ -69,7 +69,7 @@ FROM Videogame
 --Highest Selling Genre
 
 SELECT Genre,
-	   ROUND(SUM(Global_Sales),2) TotalSales
+       ROUND(SUM(Global_Sales),2) TotalSales
 FROM Videogame 
 	GROUP BY Genre
 	ORDER BY TotalSales DESC
@@ -79,7 +79,7 @@ FROM Videogame
 --Highest Selling Game 
 
 SELECT Name,
-	   ROUND(SUM(Global_Sales),2) TotalSales 
+       ROUND(SUM(Global_Sales),2) TotalSales 
 FROM Videogame 
 	GROUP BY Name
 	ORDER BY TotalSales DESC
@@ -89,7 +89,7 @@ FROM Videogame
 --Year with the most games 
 
 SELECT Year,
-	   COUNT(Name) NumGames
+       COUNT(Name) NumGames
 FROM Videogame 
 	GROUP BY Year 
 	ORDER BY NumGames DESC
@@ -99,10 +99,11 @@ FROM Videogame
 --Which Publisher produced the most games within any given year 
 
 SELECT Year,
-	   Publisher,
-	   COUNT(Name) NumGames
+       Publisher,
+       COUNT(Name) NumGames
 FROM Videogame 
-	GROUP BY Year,Publisher
+	GROUP BY Year,
+	         Publisher
 	ORDER BY NumGames DESC
 
 
@@ -110,10 +111,11 @@ FROM Videogame
 --What Genre was the most produced within any given year 
 
 SELECT Year,
-	   Genre,
-	   COUNT(Name) TotalGames
+       Genre,
+       COUNT(Name) TotalGames
 FROM Videogame 
-	GROUP BY Year,Genre
+	GROUP BY Year,
+	         Genre
 	ORDER BY TotalGames DESC
 
 
@@ -121,11 +123,11 @@ FROM Videogame
 --Potentially comparing the different country sales 
 
 SELECT NA_Sales,
-	   EU_Sales,
-	   JP_Sales,
-	   Other_Sales,
-	   Global_Sales,
-	   (SELECT AVG(Global_Sales) * 100 FROM Videogame) Avg_Global_Sales
+       EU_Sales,
+       JP_Sales,
+       Other_Sales,
+       Global_Sales,
+       (SELECT AVG(Global_Sales) * 100 FROM Videogame) Avg_Global_Sales
 FROM Videogame
 	ORDER BY Global_Sales DESC
 
@@ -141,21 +143,21 @@ FROM Videogame
  --Total Videogames for each platform 
  
 SELECT DISTINCT(Platform),
-	   COUNT(Name) TotalGames
+       COUNT(Name) TotalGames
 FROM Videogame
 WHERE Platform LIKE 'PS%'
 	GROUP BY Platform
 	ORDER BY TotalGames DESC
 
 SELECT DISTINCT(Platform),
-	   COUNT(Name) TotalGames
+       COUNT(Name) TotalGames
 FROM Videogame
 WHERE Platform LIKE 'X%'
 	GROUP BY Platform
 	ORDER BY TotalGames DESC
 
 SELECT DISTINCT(Platform),
-	   COUNT(Name) TotalGames
+       COUNT(Name) TotalGames
 FROM Videogame
 WHERE Platform LIKE 'PC%'
 AND Platform NOT LIKE 'PCFX%'
@@ -178,15 +180,15 @@ AND Platform NOT LIKE 'PCX%'
 --Global Playstation,XBOX & PC Sales By Genre & Year
 
 SELECT Year,
-	   Genre,
-	   ROUND(SUM(Global_Sales),2) TotalGlobalSales 
+       Genre,
+       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
 FROM Videogame 
 WHERE Platform LIKE 'PS%' 
 OR Platform LIKE 'X%'
 OR Platform LIKE 'PC%'
 AND Platform NOT LIKE 'PCFX%'
 	GROUP BY Year,
-			 Genre
+	         Genre
 	ORDER BY TotalGlobalSales DESC
 
 
@@ -194,15 +196,15 @@ AND Platform NOT LIKE 'PCFX%'
 --Global Playstation,XBOX & PC Videogame Sales By Publisher & Year 
 
 SELECT Year,
-	   Publisher,
-	   ROUND(SUM(Global_Sales),2) TotalGlobalSales 
+       Publisher,
+       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
 FROM Videogame 
 WHERE Platform LIKE 'PS%' 
 OR Platform LIKE 'X%'
 OR Platform LIKE 'PC%'
 AND Platform NOT LIKE 'PCFX%'
 	GROUP BY Year,
-			 Publisher
+	         Publisher
 	ORDER BY TotalGlobalSales DESC
 
 
@@ -210,7 +212,7 @@ AND Platform NOT LIKE 'PCFX%'
 --Global Playstation,XBOX & PC Platform Sales 
 
 SELECT Platform,
-	   ROUND(SUM(Global_Sales),2) TotalGlobalSales 
+       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
 FROM Videogame 
 WHERE Platform LIKE 'PS%' 
 OR Platform LIKE 'X%'
@@ -225,14 +227,15 @@ AND Platform NOT LIKE 'PCFX%'
 
 
 SELECT Platform,
-	   Name,
-	   ROUND(SUM(Global_Sales),2) TotalGlobalSales 
+       Name,    
+       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
 FROM Videogame 
 WHERE Platform LIKE 'PS%' 
 OR Platform LIKE 'X%'
 OR Platform LIKE 'PC%'
 AND Platform NOT LIKE 'PCFX%'
-	GROUP BY Platform,Name
+	GROUP BY Platform,
+	         Name
 	ORDER BY TotalGlobalSales DESC
 
 
@@ -240,16 +243,16 @@ AND Platform NOT LIKE 'PCFX%'
 --EU vs. JP vs. NA Playstation,XBOX & PC Videogame Sales by Genre & Platform
 
 SELECT Genre,Platform,
-	   ROUND(SUM(EU_Sales),2) Total_EU_Sales,
-	   ROUND(SUM(JP_Sales),2) Total_JP_Sales,
-	   ROUND(SUM(NA_Sales),2) Total_NA_Sales
+       ROUND(SUM(EU_Sales),2) Total_EU_Sales,
+       ROUND(SUM(JP_Sales),2) Total_JP_Sales,
+       ROUND(SUM(NA_Sales),2) Total_NA_Sales
 FROM Videogame 
 WHERE Platform LIKE 'PS%' 
 OR Platform LIKE 'X%'
 OR Platform LIKE 'PC%'
 AND Platform NOT LIKE 'PCFX%'
 	GROUP BY Genre,
-			 Platform 
+	         Platform 
 	ORDER BY Total_NA_Sales DESC
 
 
@@ -257,8 +260,10 @@ AND Platform NOT LIKE 'PCFX%'
 --Since Shooters were the most sold, lets find which Shooter title made the most money 
 
 SELECT Name,
-	   SUM(NA_Sales) Highest_Selling_Shooter 
+       SUM(NA_Sales) Highest_Selling_Shooter 
 FROM Videogame 
 WHERE Genre = 'Shooter'
 	GROUP BY Name
 	ORDER BY Highest_Selling_Shooter DESC
+
+
