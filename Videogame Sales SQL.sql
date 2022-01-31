@@ -1,5 +1,120 @@
 
 
+--Video Game Sales Project 
+
+
+-----------------------------------------------------------------------
+
+SELECT * 
+FROM Videogame 
+
+-----------------------------------------------------------------------
+
+--Playstation, XBOX & PC Exploration
+
+SELECT * 
+FROM Videogame 
+WHERE Platform LIKE 'PS%'
+OR Platform LIKE 'X%' 
+OR Platform LIKE 'PC%'
+AND Platform NOT LIKE 'PCX%'
+
+
+
+--Total Videogame Sales On Playstation,XBOX & PC (In Billions)
+
+SELECT ROUND(SUM(Global_Sales),2) TotalSales 
+FROM Videogame 
+WHERE Platform LIKE 'PS%'
+OR Platform LIKE 'X%' 
+OR Platform LIKE 'PC%'
+AND Platform NOT LIKE 'PCX%'
+
+
+
+--Global Playstation,XBOX & PC Sales By Genre & Year
+
+SELECT Year,
+       Genre,
+       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
+FROM Videogame 
+WHERE Platform LIKE 'PS%' 
+OR Platform LIKE 'X%'
+OR Platform LIKE 'PC%'
+AND Platform NOT LIKE 'PCFX%'
+	GROUP BY Year,
+	         Genre
+	ORDER BY TotalGlobalSales DESC
+
+
+
+--Global Playstation,XBOX & PC Videogame Sales By Publisher & Year 
+
+SELECT Year,
+       Publisher,
+       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
+FROM Videogame 
+WHERE Platform LIKE 'PS%' 
+OR Platform LIKE 'X%'
+OR Platform LIKE 'PC%'
+AND Platform NOT LIKE 'PCFX%'
+	GROUP BY Year,
+	         Publisher
+	ORDER BY TotalGlobalSales DESC
+
+
+
+--Global Playstation,XBOX & PC Platform Sales 
+
+SELECT Platform,
+       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
+FROM Videogame 
+WHERE Platform LIKE 'PS%' 
+OR Platform LIKE 'X%'
+OR Platform LIKE 'PC%'
+AND Platform NOT LIKE 'PCFX%'
+	GROUP BY Platform
+	ORDER BY TotalGlobalSales DESC
+
+
+
+--Global Videogame Sales by Tite on Playstation, XBOX & PC 
+
+
+SELECT Platform,
+       Name,    
+       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
+FROM Videogame 
+WHERE Platform LIKE 'PS%' 
+OR Platform LIKE 'X%'
+OR Platform LIKE 'PC%'
+AND Platform NOT LIKE 'PCFX%'
+	GROUP BY Platform,
+	         Name
+	ORDER BY TotalGlobalSales DESC
+
+
+
+--EU vs. JP vs. NA Playstation,XBOX & PC Videogame Sales by Genre & Platform
+
+SELECT Genre,Platform,
+       ROUND(SUM(EU_Sales),2) Total_EU_Sales,
+       ROUND(SUM(JP_Sales),2) Total_JP_Sales,
+       ROUND(SUM(NA_Sales),2) Total_NA_Sales
+FROM Videogame 
+WHERE Platform LIKE 'PS%' 
+OR Platform LIKE 'X%'
+OR Platform LIKE 'PC%'
+AND Platform NOT LIKE 'PCFX%'
+	GROUP BY Genre,
+	         Platform 
+	ORDER BY Total_NA_Sales DESC
+
+-------------------------------------------------------------------------------
+
+--Further Exploration of the dataset 
+
+-------------------------------------------------------------------------------
 
 --Videogame Sales Project
 
@@ -163,100 +278,9 @@ WHERE Platform LIKE 'PC%'
 AND Platform NOT LIKE 'PCFX%'
 	GROUP BY Platform
 	ORDER BY TotalGames DESC
-
-
-
---Total Videogame Sales On Playstation,XBOX & PC (In Billions)
-
-SELECT ROUND(SUM(Global_Sales),2) TotalSales 
-FROM Videogame 
-WHERE Platform LIKE 'PS%'
-OR Platform LIKE 'X%' 
-OR Platform LIKE 'PC%'
-AND Platform NOT LIKE 'PCX%'
-
-
-
---Global Playstation,XBOX & PC Sales By Genre & Year
-
-SELECT Year,
-       Genre,
-       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
-FROM Videogame 
-WHERE Platform LIKE 'PS%' 
-OR Platform LIKE 'X%'
-OR Platform LIKE 'PC%'
-AND Platform NOT LIKE 'PCFX%'
-	GROUP BY Year,
-	         Genre
-	ORDER BY TotalGlobalSales DESC
-
-
-
---Global Playstation,XBOX & PC Videogame Sales By Publisher & Year 
-
-SELECT Year,
-       Publisher,
-       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
-FROM Videogame 
-WHERE Platform LIKE 'PS%' 
-OR Platform LIKE 'X%'
-OR Platform LIKE 'PC%'
-AND Platform NOT LIKE 'PCFX%'
-	GROUP BY Year,
-	         Publisher
-	ORDER BY TotalGlobalSales DESC
-
-
-
---Global Playstation,XBOX & PC Platform Sales 
-
-SELECT Platform,
-       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
-FROM Videogame 
-WHERE Platform LIKE 'PS%' 
-OR Platform LIKE 'X%'
-OR Platform LIKE 'PC%'
-AND Platform NOT LIKE 'PCFX%'
-	GROUP BY Platform
-	ORDER BY TotalGlobalSales DESC
-
-
-
---Global Videogame Sales by Tite on Playstation, XBOX & PC 
-
-
-SELECT Platform,
-       Name,    
-       ROUND(SUM(Global_Sales),2) TotalGlobalSales 
-FROM Videogame 
-WHERE Platform LIKE 'PS%' 
-OR Platform LIKE 'X%'
-OR Platform LIKE 'PC%'
-AND Platform NOT LIKE 'PCFX%'
-	GROUP BY Platform,
-	         Name
-	ORDER BY TotalGlobalSales DESC
-
-
-
---EU vs. JP vs. NA Playstation,XBOX & PC Videogame Sales by Genre & Platform
-
-SELECT Genre,Platform,
-       ROUND(SUM(EU_Sales),2) Total_EU_Sales,
-       ROUND(SUM(JP_Sales),2) Total_JP_Sales,
-       ROUND(SUM(NA_Sales),2) Total_NA_Sales
-FROM Videogame 
-WHERE Platform LIKE 'PS%' 
-OR Platform LIKE 'X%'
-OR Platform LIKE 'PC%'
-AND Platform NOT LIKE 'PCFX%'
-	GROUP BY Genre,
-	         Platform 
-	ORDER BY Total_NA_Sales DESC
-
-
-
+	
+	
+	
 --Since Shooters were the most sold, lets find which Shooter title made the most money 
 
 SELECT Name,
@@ -265,5 +289,9 @@ FROM Videogame
 WHERE Genre = 'Shooter'
 	GROUP BY Name
 	ORDER BY Highest_Selling_Shooter DESC
+
+
+
+
 
 
