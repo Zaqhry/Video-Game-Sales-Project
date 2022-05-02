@@ -78,7 +78,7 @@ AND Platform NOT LIKE 'PCFX%'
 
 
 
---Global Videogame Sales by Tite on Playstation, XBOX & PC 
+--Global Videogame Sales by Title on Playstation, XBOX & PC 
 
 
 SELECT Platform,
@@ -235,7 +235,7 @@ FROM Videogame
 
 
 
---Potentially comparing the different country sales 
+--Comparing the different country sales 
 
 SELECT NA_Sales,
        EU_Sales,
